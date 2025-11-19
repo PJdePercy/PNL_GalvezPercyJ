@@ -1,0 +1,91 @@
+{% extends 'gestion/base.html' %}
+
+{% block title %}{{ tarea.titulo }} - CeslySoft{% endblock %}
+
+{% block content %}
+  <div class="mb-4">
+    <a href="{% url 'lista_tareas' %}" class="text-decoration-none" style="color: var(--cesly-primary); font-weight: 500;">
+      <i class="fas fa-arrow-left me-2"></i>Volver al listado
+    </a>
+  </div>
+
+  <div class="card">
+    <div class="card-header d-flex justify-content-between align-items-center flex-wrap">
+      <div class="d-flex align-items-center mb-2 mb-md-0">
+        <i class="fas fa-file-alt me-3" style="font-size: 1.5rem;"></i>
+        <h3 class="mb-0">{{ tarea.titulo }}</h3>
+      </div>
+      <div class="d-flex gap-2">
+        <a href="{% url 'editar_tarea' tarea.id %}" class="btn btn-warning btn-sm">
+          <i class="fas fa-edit me-1"></i>Editar
+        </a>
+        <a href="{% url 'eliminar_tarea' tarea.id %}" class="btn btn-danger btn-sm">
+          <i class="fas fa-trash-alt me-1"></i>Eliminar
+        </a>
+      </div>
+    </div>
+    
+    <div class="card-body">
+      <!-- Información de estado y prioridad -->
+      <div class="row mb-4">
+        <div class="col-md-6 mb-3">
+          <div class="p-3" style="background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); border-radius: 12px; border-left: 4px solid var(--cesly-primary);">
+            <p class="text-muted mb-2" style="font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">
+              <i class="fas fa-info-circle me-2"></i>Estado
+            </p>
+            <h5 class="mb-0" style="color: var(--cesly-secondary); font-weight: 700;">{{ tarea.estado }}</h5>
+          </div>
+        </div>
+        
+        <div class="col-md-6 mb-3">
+          <div class="p-3" style="background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); border-radius: 12px; border-left: 4px solid 
+            {% if tarea.prioridad == 'Alta' %}#dc3545
+            {% elif tarea.prioridad == 'Media' %}#ffc107
+            {% else %}#28a745{% endif %};">
+            <p class="text-muted mb-2" style="font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">
+              <i class="fas fa-flag me-2"></i>Prioridad
+            </p>
+            <h5 class="mb-0">
+              {% if tarea.prioridad == 'Alta' %}
+                <span class="badge bg-danger" style="font-size: 1rem; padding: 0.5rem 1rem;">
+                  <i class="fas fa-exclamation-circle me-1"></i>{{ tarea.prioridad }}
+                </span>
+              {% elif tarea.prioridad == 'Media' %}
+                <span class="badge bg-warning text-dark" style="font-size: 1rem; padding: 0.5rem 1rem;">
+                  <i class="fas fa-exclamation-triangle me-1"></i>{{ tarea.prioridad }}
+                </span>
+              {% else %}
+                <span class="badge bg-success" style="font-size: 1rem; padding: 0.5rem 1rem;">
+                  <i class="fas fa-check me-1"></i>{{ tarea.prioridad }}
+                </span>
+              {% endif %}
+            </h5>
+          </div>
+        </div>
+      </div>
+
+      <!-- Fecha de creación -->
+      <div class="mb-4 p-3" style="background: #f8f9fa; border-radius: 12px; border-left: 4px solid var(--cesly-accent);">
+        <p class="text-muted mb-2" style="font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">
+          <i class="fas fa-calendar-alt me-2"></i>Fecha de Creación
+        </p>
+        <p class="mb-0" style="color: var(--text-dark); font-weight: 500; font-size: 1.05rem;">
+          {{ tarea.fecha_creacion|date:"d F Y, H:i" }}
+        </p>
+      </div>
+
+      <hr style="border-color: var(--cesly-light); margin: 2rem 0;">
+
+      <!-- Descripción -->
+      <div>
+        <h5 class="mb-3" style="color: var(--cesly-dark); font-weight: 700;">
+          <i class="fas fa-align-left me-2" style="color: var(--cesly-primary);"></i>Descripción
+        </h5>
+        <div class="p-4" style="background: #f8f9fa; border-radius: 12px; border: 2px solid #e9ecef;">
+          <p style="color: var(--text-dark); line-height: 1.8; margin-bottom: 0; white-space: pre-wrap;">{{ tarea.descripcion|linebreaksbr }}</p>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+{% endblock %}

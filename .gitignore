@@ -1,0 +1,58 @@
+# --- Entorno virtual ---
+venv/
+env/
+ENV/
+.venv/
+
+# --- Archivos de entorno ---
+*.env
+*.env.* 
+.env
+.env.local
+.env.dev
+.env.prod
+
+# --- Archivos compilados de Python ---
+__pycache__/
+*.py[cod]
+*$py.class
+
+# --- Archivos temporales y logs ---
+*.log
+*.pot
+*.pyc
+*.pyo
+*.pyd
+*.sqlite3
+db.sqlite3
+
+
+
+# --- Archivos estáticos generados ---
+staticfiles/
+static/
+media/
+MEDIA_ROOT/
+
+# --- Archivos de cache ---
+*.cache
+.cache/
+*.mo
+
+# --- Herramientas / IDE ---
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# --- Django collectstatic ---
+staticfiles/
+
+# --- Archivos locales ---
+local_settings.py
+
+# --- Docker ---
+*.pid
+
+# --- Otros ---
+*.DS_Store

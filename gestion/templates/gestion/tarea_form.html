@@ -1,0 +1,137 @@
+{% extends 'gestion/base.html' %}
+
+{% block title %}
+  {% if form.instance.pk %}
+    Editar Tarea - CeslySoft
+  {% else %}
+    Nueva Tarea - CeslySoft
+  {% endif %}
+{% endblock %}
+
+{% block content %}
+  <div class="mb-4">
+    <a href="{% if form.instance.pk %}{% url 'detalle_tarea' form.instance.pk %}{% else %}{% url 'lista_tareas' %}{% endif %}" class="text-decoration-none" style="color: var(--cesly-primary); font-weight: 500;">
+      <i class="fas fa-arrow-left me-2"></i>
+      {% if form.instance.pk %}Volver al detalle{% else %}Volver al listado{% endif %}
+    </a>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <h3 class="mb-0">
+        {% if form.instance.pk %}
+          <i class="fas fa-edit me-2"></i>Editar Tarea: {{ form.instance.titulo }}
+        {% else %}
+          <i class="fas fa-plus-circle me-2"></i>Crear Nueva Tarea
+        {% endif %}
+      </h3>
+    </div>
+    
+    <div class="card-body">
+      <form method="post">
+        {% csrf_token %}
+        
+        <div class="mb-4">
+          <label for="id_titulo" class="form-label">
+            <i class="fas fa-heading me-2" style="color: var(--cesly-primary);"></i>Título
+          </label>
+          {{ form.titulo }}
+          {% if form.titulo.errors %}
+            <div class="text-danger mt-2">
+              {% for error in form.titulo.errors %}
+                <small><i class="fas fa-exclamation-circle me-1"></i>{{ error }}</small>
+              {% endfor %}
+            </div>
+          {% endif %}
+          <small class="form-text text-muted d-block mt-2">
+            <i class="fas fa-info-circle me-1"></i>Ingresa un título descriptivo para la tarea
+          </small>
+        </div>
+
+        <div class="mb-4">
+          <label for="id_descripcion" class="form-label">
+            <i class="fas fa-align-left me-2" style="color: var(--cesly-primary);"></i>Descripción
+          </label>
+          {{ form.descripcion }}
+          {% if form.descripcion.errors %}
+            <div class="text-danger mt-2">
+              {% for error in form.descripcion.errors %}
+                <small><i class="fas fa-exclamation-circle me-1"></i>{{ error }}</small>
+              {% endfor %}
+            </div>
+          {% endif %}
+          <small class="form-text text-muted d-block mt-2">
+            <i class="fas fa-info-circle me-1"></i>Describe detalladamente la tarea a realizar
+          </small>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6 mb-4">
+            <label for="id_estado" class="form-label">
+              <i class="fas fa-info-circle me-2" style="color: var(--cesly-primary);"></i>Estado
+            </label>
+            {{ form.estado }}
+            {% if form.estado.errors %}
+              <div class="text-danger mt-2">
+                {% for error in form.estado.errors %}
+                  <small><i class="fas fa-exclamation-circle me-1"></i>{{ error }}</small>
+                {% endfor %}
+              </div>
+            {% endif %}
+            <small class="form-text text-muted d-block mt-2">
+              <i class="fas fa-info-circle me-1"></i>Selecciona el estado actual
+            </small>
+          </div>
+
+          <div class="col-md-6 mb-4">
+            <label for="id_prioridad" class="form-label">
+              <i class="fas fa-flag me-2" style="color: var(--cesly-primary);"></i>Prioridad
+            </label>
+            {{ form.prioridad }}
+            {% if form.prioridad.errors %}
+              <div class="text-danger mt-2">
+                {% for error in form.prioridad.errors %}
+                  <small><i class="fas fa-exclamation-circle me-1"></i>{{ error }}</small>
+                {% endfor %}
+              </div>
+            {% endif %}
+            <small class="form-text text-muted d-block mt-2">
+              <i class="fas fa-info-circle me-1"></i>Define la prioridad de la tarea
+            </small>
+          </div>
+        </div>
+
+        <hr style="border-color: var(--cesly-light); margin: 2rem 0;">
+
+        <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
+          <a href="{% if form.instance.pk %}{% url 'detalle_tarea' form.instance.pk %}{% else %}{% url 'lista_tareas' %}{% endif %}" class="btn btn-secondary">
+            <i class="fas fa-times-circle me-2"></i>Cancelar
+          </a>
+          <button type="submit" class="btn btn-primary">
+            <i class="fas fa-save me-2"></i>
+            {% if form.instance.pk %}
+              Guardar Cambios
+            {% else %}
+              Crear Tarea
+            {% endif %}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Información adicional -->
+  <div class="card mt-4" style="background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); border: 2px solid var(--cesly-light);">
+    <div class="card-body">
+      <h6 class="mb-3" style="color: var(--cesly-dark); font-weight: 700;">
+        <i class="fas fa-lightbulb me-2" style="color: var(--cesly-primary);"></i>Consejos
+      </h6>
+      <ul class="mb-0" style="color: var(--text-dark); line-height: 1.8;">
+        <li>Usa títulos claros y concisos que describan la tarea</li>
+        <li>Proporciona detalles suficientes en la descripción</li>
+        <li>Actualiza el estado conforme avances en la tarea</li>
+        <li>Utiliza la prioridad para organizar mejor tu trabajo</li>
+      </ul>
+    </div>
+  </div>
+{% endblock %}
